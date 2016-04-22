@@ -51,29 +51,20 @@ angular.module('controlApp',
           }
         }
       })
-      .state('tab.device-detail', {
-        url: '/chats/:chatId',
+      .state('tab.control', {
+        url: '/control',
         views: {
-          'tab-chats': {
-            templateUrl: 'templates/device-detail.html',
-            controller: 'DeviceDetailCtrl'
-          }
-        }
-      })
-      .state('tab.manage', {
-        url: '/chats',
-        views: {
-          'tab-chats': {
-            templateUrl: 'templates/tab-chats.html',
-            controller: 'ChatsCtrl'
+          'tab-control': {
+            templateUrl: 'templates/tab-control.html',
+            controller: 'ControlCtrl'
           }
         }
       })
       .state('tab.setting', {
-        url: '/account',
+        url: '/setting',
         views: {
-          'tab-account': {
-            templateUrl: 'templates/tab-account.html',
+          'tab-setting': {
+            templateUrl: 'templates/tab-setting.html',
             controller: 'AccountCtrl'
           }
         }

@@ -1,9 +1,9 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="Status">
     <ion-content>
         <div ng-if="!showing" class="list">
             <a ng-repeat="device in devices" class="item item-icon-left devices-item"
-               ng-click="showDetail({{device.id}})">
-                <i class="icon ion-radio-waves" style="color:{{device.color}}"></i>
+               ng-click="showDetail(device.id)">
+                <i class="icon ion-ios-pulse" style="color:{{device.color}}"></i>
                 {{device.name}}
                 <div class="update-date">
                     Updated on: {{device.updateDate}}
@@ -11,8 +11,30 @@
             </a>
         </div>
         <div ng-if="showing">
-            <h2>{{selectedDevice.name}}</h2>
-            <nvd3 options="options" data="data" api="api" on-ready="chartReady"></nvd3>
+            <div class="card">
+                <div class="item item-button-right">
+                    {{selectedDevice.name}}
+                    <button class="button icon-left ion-chevron-left button-clear button-dark"
+                            ng-click="hideDetail()">Back
+                    </button>
+
+                </div>
+            </div>
+            <div class="card" ng-if="!hasExtra(selectedDevice.extra)">
+                <div class="item">
+                    <nvd3 options="options" data="data" api="api" on-ready="chartReady"></nvd3>
+                </div>
+            </div>
+            <div ng-if="hasExtra(selectedDevice.extra)">
+                <div class="list card" ng-repeat="ex in selectedDevice.extra">
+                    <div class="item item-image">
+                        <img src={{ex.value}}>
+                    </div>
+                    <div class="item item-icon-left assertive" href="#">
+                        {{ex.time}}
+                    </div>
+                </div>
+            </div>
         </div>
     </ion-content>
 </ion-view>

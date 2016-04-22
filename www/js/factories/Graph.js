@@ -3,12 +3,12 @@ angular.module('controlApp.GraphFactory', [])
     var options = {
       chart: {
         type: 'lineChart',
-        height: 450,
+        height: 350,
         margin: {
-          top: 20,
-          right: 20,
+          top: 10,
+          right: 5,
           bottom: 40,
-          left: 55
+          left: 40
         },
         x: function (d) {
           return d.x;
@@ -32,15 +32,15 @@ angular.module('controlApp.GraphFactory', [])
           }
         },
         xAxis: {
-          axisLabel: 'Time (ms)'
+          axisLabel: 'Time (s)',
+          axisLabelDistance: 0.5,
         },
         yAxis: {
-          axisLabel: 'Voltage (v)',
           tickFormat: function (d) {
             return d3.format('.02f')(d);
           },
-          axisLabelDistance: -10
-        }
+          axisLabelDistance: 1
+        },
       }
     };
 

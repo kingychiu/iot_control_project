@@ -15,25 +15,43 @@ angular.module('controlApp.DevicesFactory', [])
         {name: 'temperature', value: 0},
         {name: 'humanity', value: 0},
         {name: 'fanspeed', value: 0},
+      ],
+      extra:[],
+      controls:[
+        {name:'Fan Speed', type:'value', value:0},
+        {name:'Door Lock', type:'toggle', value:0},
       ]
     }, {
       id: 1,
       name: 'Security Module',
       updateDate: '2016-10-10',
       color: getColor(1),
-      data:[]
+      data:[],
+      extra:[
+        {type:'Photos', value:'https://events.google.com/io2016/images/io16-social.jpg', time:'11:50'},
+        {type:'Photos', value:'https://events.google.com/io2016/images/io16-social.jpg', time:'11:50'},
+        {type:'Photos', value:'https://events.google.com/io2016/images/io16-social.jpg', time:'11:50'},
+        {type:'Photos', value:'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg', time:'11:50'},
+        {type:'Photos', value:'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg', time:'11:50'},
+        {type:'Photos', value:'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg', time:'11:50'},
+      ],
+      controls:[]
     }, {
       id: 2,
       name: 'Power Monitor Module',
       updateDate: '2016-10-10',
       color: getColor(2),
-      data:[]
+      data:[],
+      extra:[],
+      controls:[]
     }, {
       id: 3,
       name: 'Lighting Module',
       updateDate: '2016-10-10',
       color: getColor(3),
-      data: []
+      data: [],
+      extra:[],
+      controls:[]
     }
     ];
 
