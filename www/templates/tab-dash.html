@@ -11,7 +11,8 @@
             </a>
         </div>
         <div ng-if="showing">
-            {{selectedDevice.name}}
+            <h2>{{selectedDevice.name}}</h2>
+            <nvd3 options="options" data="data" api="api" on-ready="chartReady"></nvd3>
         </div>
     </ion-content>
 </ion-view>

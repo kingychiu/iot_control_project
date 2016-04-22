@@ -1,7 +1,8 @@
 angular.module('controlApp',
-  ['ionic',
+  [
+    'ionic',
+    'nvd3',
     'controlApp.controllers',
-    'controlApp.DeviceDetailCtrl',
     // Factories
     'controlApp.DevicesFactory',
     'controlApp.GraphFactory',
@@ -17,11 +18,11 @@ angular.module('controlApp',
         StatusBar.styleDefault();
       }
     });
-    $ionicPlatform.registerBackButtonAction(function(e){
+    $ionicPlatform.registerBackButtonAction(function (e) {
       //do your stuff
       e.preventDefault();
       return false;
-    },101);
+    }, 101);
   })
 
   .config(function ($stateProvider, $urlRouterProvider) {
