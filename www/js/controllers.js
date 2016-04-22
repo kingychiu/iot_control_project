@@ -1,28 +1,41 @@
-angular.module('starter.controllers', [])
+angular.module('controlApp.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+  .controller('DashCtrl', function ($scope, Devices, $ionicPlatform) {
+    $scope.devices = Devices.all();
+    $scope.showing = false;
+    $scope.showDetail = function(deviceID){
+      $scope.showing = true;
+      $scope.selectedDevice = Devices.get(deviceID);
+    };
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+    $scope.hideDetail = function(){
+      $scope.showing = false;
+    };
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
+    $scope.back = function(){
+      console.log('back');
+      $scope.$apply(function () {
+        $scope.hideDetail();
+      });
+    };
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
+    $ionicPlatform.onHardwareBackButton($scope.back);
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-});
+  })
+
+  .controller('ChatsCtrl', function ($scope, Chats) {
+    $scope.chats = Chats.all();
+    $scope.remove = function (chat) {
+      Chats.remove(chat);
+    };
+  })
+
+  .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
+    $scope.chat = Chats.get($stateParams.chatId);
+  })
+
+  .controller('AccountCtrl', function ($scope) {
+    $scope.settings = {
+      enableFriends: true
+    };
+  });

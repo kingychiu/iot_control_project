@@ -1,1 +1,8 @@
-/* Empty. Add your own CSS if you like */
+.devices-item{
+    font-size: 2em;
+}
+.devices-item .update-date{
+    margin-top: 3px;
+    font-size: 0.5em;
+    color:#333333;
+}
