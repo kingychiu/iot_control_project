@@ -12,17 +12,28 @@
         </div>
         <div ng-if="showing">
             <div class="card">
-                <div class="item item-button-right">
+                <div class="item item-button-right devices-item">
                     {{selectedDevice.name}}
+                    <div class="update-date">
+                        Updated on: {{selectedDevice.updateDate}}
+                    </div>
                     <button class="button icon-left ion-chevron-left button-clear button-dark"
                             ng-click="hideDetail()">Back
                     </button>
 
                 </div>
             </div>
-            <div class="card" ng-if="!hasExtra(selectedDevice.extra)">
+            <div class="card" ng-if="!isEmpty(graphData)">
                 <div class="item">
-                    <nvd3 options="options" data="data" api="api" on-ready="chartReady"></nvd3>
+                    <nvd3 options="options" data="graphData" api="api" on-ready="chartReady"></nvd3>
+                </div>
+            </div>
+            <div ng-if="!isEmpty(selectedDevice.status)">
+                <div class="card " ng-repeat="s in selectedDevice.status">
+                    <div class="item item-icon-right">
+                        <i class="icon">{{s.value}}</i>
+                        {{s.name}}
+                    </div>
                 </div>
             </div>
             <div ng-if="hasExtra(selectedDevice.extra)">

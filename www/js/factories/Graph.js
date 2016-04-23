@@ -16,6 +16,7 @@ angular.module('controlApp.GraphFactory', [])
         y: function (d) {
           return d.y;
         },
+        //forceY: [0, 100],
         useInteractiveGuideline: true,
         dispatch: {
           stateChange: function (e) {

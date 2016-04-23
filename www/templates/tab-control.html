@@ -19,18 +19,10 @@
                     </button>
 
                 </div>
-            </div>
-            <div class="card">
-                <div class="item item-divide" ng-class='{"item-toggle": control.type=="toggle"}'
-                     ng-repeat="control in selectedDevice.controls track by $index">
-                    {{control.name}}
-                    <div class="item range range-positive" ng-if='control.type=="value"'>
-                        <input type="range" name="volume" min="0" max="100"
-                               ng-model="controlValues[$index]">
-                        {{controlValues[$index]}}
-                    </div>
-                    <label class="toggle toggle-assertive" ng-if='control.type=="toggle"'>
-                        <input type="checkbox">
+                <div class="item item-divide item-toggle" ng-if='!isEmpty(selectedDevice.controls)'>
+                    Auto Mode
+                    <label class="toggle toggle-assertive">
+                        <input type="checkbox" ng-model="autoMode" ng-change="toggleAuto()">
                         <div class="track">
                             <div class="handle"></div>
                         </div>
@@ -38,9 +30,27 @@
                 </div>
 
             </div>
+            <div class="card" ng-if="!autoMode">
+                <div class="item item-divide" ng-class='{"item-toggle": control.control_type=="toggle"}'
+                     ng-repeat="control in selectedDevice.controls track by $index">
+                    {{control.name}}
+                    <div class="item range range-positive" ng-if='control.control_type=="value"'>
+                        <input type="range" name="volume" min="0" max="255"
+                               ng-model="controlValues[control.status_id]">
+                        {{controlValues[control.status_id]}}
+                    </div>
+                    <label class="toggle toggle-assertive" ng-if='control.control_type=="toggle"'>
+                        <input type="checkbox" ng-model="controlValues[control.status_id]">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </div>
+            </div>
 
-            <button class="button button-full button-positive" style="position:absolute; bottom: 10px">
-                Submit
+            <button class="button button-full button-positive" style="position:absolute; bottom: 10px"
+                    ng-click="submit()">
+                {{submitText}}
             </button>
             <!--<a class="button icon-left ion-chevron-left button-clear button-dark" ng-click="hideDetail()">Back</a>-->
         </div>
