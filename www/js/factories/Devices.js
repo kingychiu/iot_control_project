@@ -6,7 +6,10 @@ angular.module('controlApp.DevicesFactory', [])
       return colors[id % colors.length]
     }
 
-    var devices = []
+    //var base = 'http://192.168.1.8:3000'
+    var base = 'http://192.168.1.19:3000';
+    var devices = [];
+    var lastCall = 0;
     //var devices = [{
     //  id: 0,
     //  name: 'Washroom Module',
@@ -81,21 +84,31 @@ angular.module('controlApp.DevicesFactory', [])
         }))
       },
       postDeviceControl: function (status_id, payload, callback) {
-        $http.post('http://192.168.1.8:3000/apis/user/1/status/' + status_id, payload).then(callback);
+        $http.post(base + '/apis/user/1/status/' + status_id, payload).then(callback);
+      },
+      deleteUserDevice: function (device_id, callback) {
+        $http.delete(base + '/apis/user/1/devices/' + device_id).then(callback);
+      },
+      addUserDevice: function(device_id, callback){
+        $http.post(base + '/apis/user/1/devices/' + device_id).then(callback);
       },
       enableAuto: function (status_id, callback) {
-        $http.get('http://192.168.1.8:3000/apis//user/1/status/' + status_id + '/auto').then(callback);
+        $http.get(base + '/apis//user/1/status/' + status_id + '/auto').then(callback);
+      },
+      getLastCall: function () {
+        return lastCall;
       },
       getDeviceFromServer: function () {
+        lastCall = Date.now();
         var handler = function () {
-          $http.get('http://192.168.1.8:3000/apis/user/1/devices').then(
+          $http.get(base + '/apis/user/1/devices').then(
             function (res) {
               devices = [];
               var devicesFromServer = res.data.msg;
               for (var i = 0; i < devicesFromServer.length; i++) {
                 var id = devicesFromServer[i].device_id;
                 var name = devicesFromServer[i].name;
-                $http.get('http://192.168.1.8:3000/apis/device/' + id + '/status').then(
+                $http.get(base + '/apis/device/' + id + '/status').then(
                   function (res) {
                     var status = res.data.msg;
                     if (_.isEmpty(status))

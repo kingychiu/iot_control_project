@@ -1,5 +1,15 @@
 <ion-view view-title="Setting">
-  <ion-content>
-    Setting
-  </ion-content>
+    <ion-content>
+        <div class="list">
+            <a ng-repeat="device in devices" class="item item-icon-left devices-item"
+               ng-click="remove(device.id)">
+                <i class="icon ion-minus-round" style="color:{{device.color}}"></i>
+                {{device.name}}
+            </a>
+            <a class="item item-icon-left devices-item" ng-click="addDevice()">
+                <i class="icon ion-plus-round" style="color:{{device.color}}"></i>
+                Add New Module
+            </a>
+        </div>
+    </ion-content>
 </ion-view>

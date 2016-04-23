@@ -65,7 +65,7 @@ angular.module('controlApp',
         views: {
           'tab-setting': {
             templateUrl: 'templates/tab-setting.html',
-            controller: 'AccountCtrl'
+            controller: 'SettingCtrl'
           }
         }
       });

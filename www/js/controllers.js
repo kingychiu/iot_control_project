@@ -49,6 +49,13 @@ angular.module('controlApp.controllers', [])
 
 
     $scope.updateList = function () {
+      var diff = Date.now() - Devices.getLastCall();
+      if (diff < 800) {
+        $scope.devices = Devices.all();
+        $scope.updateGraph();
+        return;
+      }
+      $scope.devices = Devices.all();
       Devices.getDeviceFromServer().then(function (data) {
         //console.log('resolved');
         $scope.devices = Devices.all();
@@ -56,7 +63,7 @@ angular.module('controlApp.controllers', [])
       })
     };
 
-    $interval($scope.updateList, 1000);
+    $scope.ajaxWork = $interval($scope.updateList, 1000);
 
     $scope.chartReady = function (scope, element) {
       console.log('chartReady');
@@ -65,15 +72,18 @@ angular.module('controlApp.controllers', [])
 
     $scope.isEmpty = function (t) {
       return _.isEmpty(t);
-    }
+    };
+
 
   })
 
-  .controller('ControlCtrl', function ($scope, Chats, Devices, $ionicPlatform) {
+  .controller('ControlCtrl', function ($scope, Chats, Devices, $ionicPlatform, $interval) {
     $scope.devices = Devices.all();
     $scope.showing = false;
     $scope.autoMode = false;
     $scope.controlValues = [];
+    $scope.submitStage = 0;
+    $scope.submitText = "Submit";
     $scope.showDetail = function (deviceID) {
       $scope.showing = true;
       $scope.selectedDevice = Devices.get(deviceID);
@@ -85,9 +95,9 @@ angular.module('controlApp.controllers', [])
       }
     };
 
-    $scope.toggleAuto = function(){
+    $scope.toggleAuto = function () {
       $scope.autoMode = !$scope.autoMode;
-      if($scope.autoMode){
+      if ($scope.autoMode) {
         $scope.submitStage = 2;
       }
     };
@@ -135,11 +145,71 @@ angular.module('controlApp.controllers', [])
       }
 
     };
-    $scope.submitStage = 0;
-    $scope.submitText = "Submit";
-  })
-  .controller('AccountCtrl', function ($scope) {
-    $scope.settings = {
-      enableFriends: true
+
+    $scope.updateList = function () {
+      var diff = Date.now() - Devices.getLastCall();
+      if (diff < 800) {
+        $scope.devices = Devices.all();
+        return;
+      }
+      $scope.devices = Devices.all();
+      Devices.getDeviceFromServer().then(function (data) {
+        //console.log('resolved');
+        $scope.devices = Devices.all();
+      })
     };
+
+    $scope.ajaxWork = $interval($scope.updateList, 1000);
+  })
+  .controller('SettingCtrl', function ($scope, Devices, $interval, $ionicPopup) {
+    $scope.devices = [];
+    $scope.remove = function (device_id) {
+      console.log('remove:' + device_id);
+      Devices.deleteUserDevice(device_id, function () {
+        console.log('removed');
+      });
+    };
+    $scope.updateList = function () {
+      var diff = Date.now() - Devices.getLastCall();
+      if (diff < 800) {
+        $scope.devices = Devices.all();
+        return;
+      }
+      $scope.devices = Devices.all();
+      Devices.getDeviceFromServer().then(function (data) {
+        //console.log('resolved');
+        $scope.devices = Devices.all();
+      })
+    };
+
+    $scope.ajaxWork = $interval($scope.updateList, 1000);
+    $scope.addDevice = function () {
+      $scope.data = {};
+      var popup = $ionicPopup.show({
+        template: '<input type="number" ng-model="data.id">',
+        title: 'Has a new module?',
+        subTitle: 'Please enter device ID',
+        scope: $scope,
+        buttons: [
+          {text: 'Cancel'},
+          {
+            text: '<b>Add</b>',
+            type: 'button-positive',
+            onTap: function (e) {
+              if (!$scope.data.id) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+              } else {
+                return $scope.data.id;
+              }
+            }
+          }
+        ]
+      });
+      popup.then(function (id) {
+        console.log(id)
+        Devices.addUserDevice(id);
+      });
+    }
+
   });
