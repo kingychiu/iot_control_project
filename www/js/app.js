@@ -6,8 +6,9 @@ angular.module('controlApp',
     // Factories
     'controlApp.DevicesFactory',
     'controlApp.GraphFactory',
-    'controlApp.services'
+    'controlApp.services',
   ])
+
   .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
       if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {

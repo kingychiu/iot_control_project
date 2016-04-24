@@ -55,7 +55,6 @@ angular.module('controlApp.controllers', [])
         $scope.updateGraph();
         return;
       }
-      $scope.devices = Devices.all();
       Devices.getDeviceFromServer().then(function (data) {
         //console.log('resolved');
         $scope.devices = Devices.all();
@@ -138,7 +137,7 @@ angular.module('controlApp.controllers', [])
         for (var i = 0; i < $scope.selectedDevice.controls.length; i++) {
           var idx = $scope.selectedDevice.controls[i].status_id;
           Devices.enableAuto(idx, function () {
-            $scope.submitStage = 0;
+            $scope.submitStage = 2;
             $scope.submitText = "Submit";
           });
         }
@@ -152,7 +151,6 @@ angular.module('controlApp.controllers', [])
         $scope.devices = Devices.all();
         return;
       }
-      $scope.devices = Devices.all();
       Devices.getDeviceFromServer().then(function (data) {
         //console.log('resolved');
         $scope.devices = Devices.all();
@@ -175,7 +173,6 @@ angular.module('controlApp.controllers', [])
         $scope.devices = Devices.all();
         return;
       }
-      $scope.devices = Devices.all();
       Devices.getDeviceFromServer().then(function (data) {
         //console.log('resolved');
         $scope.devices = Devices.all();
@@ -207,7 +204,7 @@ angular.module('controlApp.controllers', [])
         ]
       });
       popup.then(function (id) {
-        console.log(id)
+        console.log(id);
         Devices.addUserDevice(id);
       });
     }

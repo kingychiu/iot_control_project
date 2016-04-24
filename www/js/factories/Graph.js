@@ -8,7 +8,7 @@ angular.module('controlApp.GraphFactory', [])
           top: 10,
           right: 5,
           bottom: 40,
-          left: 40
+          left: 50
         },
         x: function (d) {
           return d.x;
@@ -42,6 +42,7 @@ angular.module('controlApp.GraphFactory', [])
           },
           axisLabelDistance: 1
         },
+        forceY:[0,1024],
       }
     };
 

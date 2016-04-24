@@ -93,7 +93,7 @@ angular.module('controlApp.DevicesFactory', [])
         $http.post(base + '/apis/user/1/devices/' + device_id).then(callback);
       },
       enableAuto: function (status_id, callback) {
-        $http.get(base + '/apis//user/1/status/' + status_id + '/auto').then(callback);
+        $http.get(base + '/apis/user/1/status/' + status_id + '/auto').then(callback);
       },
       getLastCall: function () {
         return lastCall;
@@ -113,7 +113,7 @@ angular.module('controlApp.DevicesFactory', [])
                     var status = res.data.msg;
                     if (_.isEmpty(status))
                       return;
-                    var updateDate = status[0].last_update;
+                    var updateDate= moment(status[0].last_update).tz('Asia/Hong_Kong').format();
                     var text = _.filter(status, function (item) {
                       return item.type == 'text';
                     });
@@ -132,7 +132,9 @@ angular.module('controlApp.DevicesFactory', [])
                       // get image from server
                       $http.get(base + '/apis/device/' + id + '/status/' + image[0].status_id + '/image').then(
                         function (res) {
-                          console.log(JSON.stringify(res.data.msg));
+                         // console.log(JSON.stringify(res.data.msg));
+
+                          res.data.msg.date= moment(res.data.msg.date).tz('Asia/Hong_Kong').format();
                           devices.push({
                             id: id,
                             name: name,
