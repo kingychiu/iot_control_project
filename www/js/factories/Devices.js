@@ -6,8 +6,8 @@ angular.module('controlApp.DevicesFactory', [])
       return colors[id % colors.length]
     }
 
-    //var base = 'http://192.168.1.8:3000'
-    var base = 'http://192.168.1.19:3000';
+    var base = 'http://192.168.1.8:3000';
+    //var base = 'http://192.168.1.19:3000';
     var devices = [];
     var lastCall = 0;
     //var devices = [{
@@ -89,7 +89,7 @@ angular.module('controlApp.DevicesFactory', [])
       deleteUserDevice: function (device_id, callback) {
         $http.delete(base + '/apis/user/1/devices/' + device_id).then(callback);
       },
-      addUserDevice: function(device_id, callback){
+      addUserDevice: function (device_id, callback) {
         $http.post(base + '/apis/user/1/devices/' + device_id).then(callback);
       },
       enableAuto: function (status_id, callback) {
@@ -105,9 +105,9 @@ angular.module('controlApp.DevicesFactory', [])
             function (res) {
               devices = [];
               var devicesFromServer = res.data.msg;
-              for (var i = 0; i < devicesFromServer.length; i++) {
-                var id = devicesFromServer[i].device_id;
-                var name = devicesFromServer[i].name;
+              angular.forEach(devicesFromServer, function (d, key) {
+                var id = d.device_id;
+                var name = d.name;
                 $http.get(base + '/apis/device/' + id + '/status').then(
                   function (res) {
                     var status = res.data.msg;
@@ -127,23 +127,44 @@ angular.module('controlApp.DevicesFactory', [])
                     var control = _.filter(status, function (item) {
                       return item.can_control == 1;
                     });
+
+                    if (!_.isEmpty(image)) {
+                      // get image from server
+                      $http.get(base + '/apis/device/' + id + '/status/' + image[0].status_id + '/image').then(
+                        function (res) {
+                          console.log(JSON.stringify(res.data.msg));
+                          devices.push({
+                            id: id,
+                            name: name,
+                            updateDate: updateDate,
+                            color: getColor(id),
+                            status: text,
+                            graphData: graph,
+                            image: res.data.msg,
+                            controls: control,
+                          });
+                        }
+                      );
+                    } else {
+                      devices.push({
+                        id: id,
+                        name: name,
+                        updateDate: updateDate,
+                        color: getColor(id),
+                        status: text,
+                        graphData: graph,
+                        image: image,
+                        controls: control,
+                      });
+                    }
                     //console.log(JSON.stringify(control[0]));
 
-                    devices.push({
-                      id: id,
-                      name: name,
-                      updateDate: updateDate,
-                      color: getColor(id),
-                      status: text,
-                      graphData: graph,
-                      image: image,
-                      controls: control,
-                    });
+
                   }, function (err) {
 
                   }
                 );
-              }
+              });
             }, function (err) {
               console.log('err');
             });

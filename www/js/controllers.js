@@ -88,7 +88,7 @@ angular.module('controlApp.controllers', [])
       $scope.showing = true;
       $scope.selectedDevice = Devices.get(deviceID);
       $scope.autoMode = (_.isEmpty($scope.selectedDevice.controls)
-      || $scope.selectedDevice.controls[0].control_flag == 1) ? true : false;
+      || $scope.selectedDevice.controls[0].control_flag == 0) ? true : false;
       console.log($scope.autoMode);
       for (var i = 0; i < $scope.selectedDevice.controls.length; i++) {
         $scope.controlValues[$scope.selectedDevice.controls[i].status_id] = 0;

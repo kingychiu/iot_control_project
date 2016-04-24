@@ -36,13 +36,13 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="hasExtra(selectedDevice.extra)">
-                <div class="list card" ng-repeat="ex in selectedDevice.extra">
+            <div ng-if="!isEmpty(selectedDevice.image)">
+                <div class="list card" ng-repeat="i in selectedDevice.image">
                     <div class="item item-image">
-                        <img src={{ex.value}}>
+                        <img src='http://192.168.1.8:3000/images/{{i.name}}'>
                     </div>
                     <div class="item item-icon-left assertive" href="#">
-                        {{ex.time}}
+                        {{i.name}}
                     </div>
                 </div>
             </div>
